@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { cardsModel } from '../db/models/card.js';
 
 export const getAllCards = async () => {
@@ -7,6 +8,13 @@ export const getAllCards = async () => {
 
 export const getCardById = async (cardId) => {
   const card = await cardsModel.findById({ _id: cardId });
+
+  if (!card) {
+    throw createHttpError(404, {
+      message: `Card with id ${cardId} doesnt exist`,
+    });
+  }
+
   return card;
 };
 
