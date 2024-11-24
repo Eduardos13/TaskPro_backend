@@ -32,4 +32,4 @@ const boardSchema = new Schema(
   },
 );
 
-export const boadrModel = model('board', boardSchema);
+export const boadrModel = model('boards', boardSchema);

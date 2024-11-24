@@ -22,7 +22,7 @@ const cardSchema = new Schema(
     boardId: {
       type: Schema.Types.ObjectId,
       ref: 'boards',
-      required: true,
+      required: false,
     },
     columnId: {
       type: Schema.Types.ObjectId,
