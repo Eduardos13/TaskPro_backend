@@ -3,9 +3,9 @@ import pino from 'pino-http';
 import cors from 'cors';
 import { env } from './utils/env.js';
 import { ENV_VARS } from './constants/index.js';
-import errorHandlerMiddleware from './middlewares/errorHandler.js';
-import notFoundMiddleware from './middlewares/notFound.js';
-import { getAllCards, getCardById } from './services/cards.js';
+import { errorHandlerMiddleware } from './middlewares/errorHandler.js';
+import { notFoundMiddleware } from './middlewares/notFound.js';
+import router from './routers/index.js';
 
 const PORT = env(ENV_VARS.PORT, 3000);
 
@@ -30,22 +30,7 @@ export const startServer = () => {
     });
   });
 
-  app.get('/cards', async (req, res) => {
-    const cards = await getAllCards();
-
-    res.status(200).json({
-      cards,
-    });
-  });
-
-  app.get('/cards/:cardId', async (req, res) => {
-    const { cardId } = req.params;
-    const card = await getCardById(cardId);
-
-    res.status(200).json({
-      card,
-    });
-  });
+  app.use(router);
 
   app.use('*', notFoundMiddleware);
 
