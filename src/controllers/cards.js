@@ -3,6 +3,7 @@ import {
   deleteCardById,
   getAllCards,
   getCardById,
+  updateCard,
 } from '../services/cards.js';
 
 export const createCardController = async (req, res) => {
@@ -11,6 +12,19 @@ export const createCardController = async (req, res) => {
   res.status(201).send({
     status: 201,
     message: 'Successfually created a new card',
+    data: card,
+  });
+};
+
+export const patchCardController = async (req, res) => {
+  const { cardId } = req.params;
+  const { body } = req;
+
+  const card = await updateCard(cardId, body);
+
+  res.status(200).send({
+    status: 200,
+    message: 'Successfully updated card',
     data: card,
   });
 };
