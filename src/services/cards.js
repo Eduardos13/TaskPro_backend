@@ -1,6 +1,10 @@
 import createHttpError from 'http-errors';
 import { cardsModel } from '../db/models/card.js';
 
+export const createCard = async (payload) => {
+  return await cardsModel.create(payload);
+};
+
 export const getAllCards = async () => {
   const cards = await cardsModel.find(); // Add boardID later
   return cards;
