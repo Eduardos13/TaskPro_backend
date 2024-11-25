@@ -1,4 +1,4 @@
-import { getAllColumns } from '../services/columns.js';
+import { deleteColumnById, getAllColumns } from '../services/columns.js';
 
 export const getAllColumnsController = async (req, res) => {
   const columns = await getAllColumns();
@@ -8,4 +8,12 @@ export const getAllColumnsController = async (req, res) => {
     message: 'Successfully found all columns',
     columns,
   });
+};
+
+export const deleteColumnByIdController = async (req, res) => {
+  const { columnId } = req.params;
+
+  await deleteColumnById(columnId);
+
+  res.status(204).send();
 };
