@@ -49,7 +49,7 @@ export const getAllCardsController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfulle found all cards',
+    message: 'Successfully found all cards',
     cards,
   });
 };

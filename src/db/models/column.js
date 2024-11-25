@@ -15,7 +15,7 @@ const columnSchema = new Schema(
     board: {
       type: Schema.Types.ObjectId,
       ref: 'boards',
-      required: true,
+      required: false, // put true later here
     },
   },
   {
