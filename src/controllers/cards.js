@@ -11,7 +11,7 @@ export const createCardController = async (req, res) => {
 
   res.status(201).send({
     status: 201,
-    message: 'Successfually created a new card',
+    message: 'Successfully created a new card',
     data: card,
   });
 };
