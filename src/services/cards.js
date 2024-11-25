@@ -5,18 +5,23 @@ export const createCard = async (payload) => {
   return await cardsModel.create(payload);
 };
 
-export const updateCard = async (cardId, payload) => {
-  const card = await cardsModel.findByIdAndUpdate(cardId, payload, {
-    new: true,
+export const updateCard = async (cardId, payload, options = {}) => {
+  const rawCardResult = await cardsModel.findByIdAndUpdate(cardId, payload, {
+    new: true, // returning a new card right now
+    includeResultMetadata: true,
+    ...options, // allowing to upsert the card and create it if it wasnt exist
   });
 
-  if (!card) {
+  if (!rawCardResult.value) {
     throw createHttpError(404, {
       message: `Card with id ${cardId} doesnt exist`,
     });
   }
 
-  return card;
+  return {
+    card: rawCardResult.value,
+    isNew: !rawCardResult.lastErrorObject.updatedExisting,
+  };
 };
 
 export const getAllCards = async () => {

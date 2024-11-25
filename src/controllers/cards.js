@@ -20,10 +20,25 @@ export const patchCardController = async (req, res) => {
   const { cardId } = req.params;
   const { body } = req;
 
-  const card = await updateCard(cardId, body);
+  const { card } = await updateCard(cardId, body);
 
   res.status(200).send({
     status: 200,
+    message: 'Successfully updated card',
+    data: card,
+  });
+};
+
+export const putCardController = async (req, res) => {
+  const { cardId } = req.params;
+  const { body } = req;
+
+  const { card, isNew } = await updateCard(cardId, body, { upsert: true });
+
+  const status = isNew ? 201 : 200;
+
+  res.status(status).send({
+    status,
     message: 'Successfully updated card',
     data: card,
   });
