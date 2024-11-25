@@ -1,4 +1,4 @@
-import { getAllCards, getCardById } from '../services/cards.js';
+import { deleteCardById, getAllCards, getCardById } from '../services/cards.js';
 
 export const getAllCardsController = async (req, res) => {
   const cards = await getAllCards();
@@ -19,4 +19,12 @@ export const getCardByIdController = async (req, res, next) => {
     message: `Successfully found a card with id ${cardId}`,
     card,
   });
+};
+
+export const deleteCardByIdController = async (req, res) => {
+  const { cardId } = req.params;
+
+  await deleteCardById(cardId);
+
+  res.status(204).send();
 };

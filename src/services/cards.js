@@ -18,6 +18,9 @@ export const getCardById = async (cardId) => {
   return card;
 };
 
+export const deleteCardById = async (cardId) => {
+  await cardsModel.findByIdAndDelete(cardId);
+};
+
 // export const createCard = async () => {};
 // export const updateCard = async () => {};
-// export const deleteCard = async () => {};
