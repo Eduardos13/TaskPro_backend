@@ -39,7 +39,7 @@ export const putCardController = async (req, res) => {
 
   res.status(status).send({
     status,
-    message: 'Successfully updated card',
+    message: 'Successfully upserted card',
     data: card,
   });
 };
