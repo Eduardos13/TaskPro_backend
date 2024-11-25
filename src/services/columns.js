@@ -5,6 +5,18 @@ export const getAllColumns = async () => {
   return columns;
 };
 
+export const getColumnById = async (columnId) => {
+  const column = await columnModel.findById({ _id: columnId });
+
+  if (!column) {
+    throw createHttpError(404, {
+      message: `Column with id ${columnId} doesnt exist`,
+    });
+  }
+
+  return column;
+};
+
 export const deleteColumnById = async (columnId) => {
   await columnModel.findByIdAndDelete(columnId);
 };
