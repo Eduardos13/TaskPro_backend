@@ -6,8 +6,11 @@ import {
   getAllColumnsController,
   getColumnByIdController,
 } from '../controllers/columns.js';
+import { validateMongoIdParam } from '../middlewares/validateMongoIdParam.js';
 
 const columnsRouter = Router();
+
+columnsRouter.use('/:columnId', validateMongoIdParam('columnId'));
 
 columnsRouter.post('/', controllerWrapper(createColumnController));
 columnsRouter.get('/', controllerWrapper(getAllColumnsController));

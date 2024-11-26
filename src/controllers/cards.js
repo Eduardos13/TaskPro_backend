@@ -56,6 +56,7 @@ export const getAllCardsController = async (req, res) => {
 
 export const getCardByIdController = async (req, res, next) => {
   const { cardId } = req.params;
+
   const card = await getCardById(cardId);
 
   res.status(200).json({
