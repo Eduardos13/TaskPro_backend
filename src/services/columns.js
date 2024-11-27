@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { columnModel } from '../db/models/column.js';
 
 export const createColumn = async (payload) => {
