@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 export const createCardValidationSchema = Joi.object({
-  title: Joi.string().required().min(3).max(10).messages({
+  title: Joi.string().required().min(3).max(20).messages({
     'string.base': 'Title should be a string',
     'string.min': 'Title should be at least 3 characters',
     'string.empty': 'Title cannot be empty',
