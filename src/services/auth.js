@@ -1,6 +1,12 @@
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
+import crypto from 'node:crypto';
 import { userModel } from '../db/models/user.js';
+import { sessionModel } from '../db/models/session.js';
+import {
+  ACCESS_TOKEN_LIVE_TIME,
+  REFRESH_TOKEN_LIVE_TIME,
+} from '../constants/index.js';
 
 const findUserByEmail = async (email) => await userModel.findOne({ email });
 
@@ -33,4 +39,14 @@ export const loginUser = async (payload) => {
   if (!arePasswordsEqual) {
     throw createHttpError(401, 'User email or password is incorrect');
   }
+
+  const session = sessionModel.create({
+    userId: user._id,
+    accessToken: crypto.randomBytes(16).toString('base64'),
+    refreshToken: crypto.randomBytes(16).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + ACCESS_TOKEN_LIVE_TIME),
+    refreshTokenValidUntil: new Date(Date.now() + REFRESH_TOKEN_LIVE_TIME),
+  });
+
+  return session;
 };

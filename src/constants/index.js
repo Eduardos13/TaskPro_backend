@@ -9,3 +9,6 @@ export const MONGO_DB_VARS = {
   MONGO_URL: 'MONGO_URL',
   MONGO_DB: 'MONGO_DB',
 };
+
+export const ACCESS_TOKEN_LIVE_TIME = 1000 * 60 * 15; // 15 MINS
+export const REFRESH_TOKEN_LIVE_TIME = 1000 * 60 * 60 * 24; // 24 HOURS
