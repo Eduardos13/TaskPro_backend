@@ -3,6 +3,7 @@ import { controllerWrapper } from '../utils/controllerWrapper.js';
 import {
   loginUserController,
   logoutUserController,
+  refreshUserSessionController,
   registerUserController,
 } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -22,6 +23,9 @@ authRouter.post(
   controllerWrapper(loginUserController),
 );
 authRouter.post('/logout', controllerWrapper(logoutUserController));
-authRouter.post('/refresh-session');
+authRouter.post(
+  '/refresh-session',
+  controllerWrapper(refreshUserSessionController),
+);
 
 export default authRouter;
