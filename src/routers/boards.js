@@ -5,6 +5,7 @@ import {
   createBoardController,
   deleteBoardByIdController,
   getAllBoardsController,
+  getBoardByIdController,
 } from '../controllers/boards.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createBoardValidationSchema } from '../validation/createBoardValidationSchema.js';
@@ -20,6 +21,7 @@ boardRouter.post(
 );
 
 boardRouter.get('/', controllerWrapper(getAllBoardsController));
+boardRouter.get('/:boardId', controllerWrapper(getBoardByIdController));
 boardRouter.delete('/:boardId', controllerWrapper(deleteBoardByIdController));
 
 export default boardRouter;

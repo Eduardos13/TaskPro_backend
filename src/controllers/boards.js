@@ -2,6 +2,7 @@ import {
   createBoard,
   deleteBoardById,
   getAllBoards,
+  getBoardById,
 } from '../services/boards.js';
 
 export const createBoardController = async (req, res) => {
@@ -28,6 +29,18 @@ export const getAllBoardsController = async (req, res) => {
     status: 200,
     message: 'Successfully found all boards',
     boards,
+  });
+};
+
+export const getBoardByIdController = async (req, res) => {
+  const { boardId } = req.params;
+
+  const board = await getBoardById(boardId);
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found a card with id ${boardId}`,
+    board,
   });
 };
 
