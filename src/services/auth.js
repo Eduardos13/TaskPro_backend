@@ -40,6 +40,8 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'User email or password is incorrect');
   }
 
+  await sessionModel.deleteOne({ userId: user._id });
+
   const session = sessionModel.create({
     userId: user._id,
     accessToken: crypto.randomBytes(16).toString('base64'),
@@ -49,4 +51,8 @@ export const loginUser = async (payload) => {
   });
 
   return session;
+};
+
+export const logoutUser = async (sessionId, sessionToken) => {
+  await sessionModel.deleteOne({ _id: sessionId, refreshToken: sessionToken });
 };

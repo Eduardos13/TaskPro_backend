@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN_LIVE_TIME } from '../constants/index.js';
-import { loginUser, registerUser } from '../services/auth.js';
+import { loginUser, logoutUser, registerUser } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
   const { body } = req;
@@ -21,7 +21,7 @@ export const loginUserController = async (req, res) => {
     expires: new Date(Date.now() + ACCESS_TOKEN_LIVE_TIME),
   });
 
-  res.cookie('sessionToken', session.accessToken, {
+  res.cookie('sessionToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ACCESS_TOKEN_LIVE_TIME),
   });
@@ -31,4 +31,13 @@ export const loginUserController = async (req, res) => {
     message: 'User successfully logged in',
     data: { accessToken: session.accessToken },
   });
+};
+
+export const logoutUserController = async (req, res) => {
+  await logoutUser(req.cookies.sessionId, req.cookies.sessionToken);
+
+  res.clearCookie('sessionId');
+  res.clearCookie('sessionToken');
+
+  res.status(204).send();
 };
