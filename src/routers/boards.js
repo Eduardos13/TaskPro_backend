@@ -3,6 +3,7 @@ import { validateMongoIdParam } from '../middlewares/validateMongoIdParam.js';
 import { controllerWrapper } from '../utils/controllerWrapper.js';
 import {
   createBoardController,
+  deleteBoardByIdController,
   getAllBoardsController,
 } from '../controllers/boards.js';
 
@@ -13,5 +14,6 @@ boardRouter.use('boardId', validateMongoIdParam('boardId'));
 boardRouter.post('/', controllerWrapper(createBoardController));
 
 boardRouter.get('/', controllerWrapper(getAllBoardsController));
+boardRouter.delete('/:boardId', controllerWrapper(deleteBoardByIdController));
 
 export default boardRouter;

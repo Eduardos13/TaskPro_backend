@@ -8,3 +8,7 @@ export const getAllBoards = async () => {
   const boards = await boadrModel.find();
   return boards;
 };
+
+export const deleteBoardById = async (boardId) => {
+  await boadrModel.findByIdAndDelete(boardId);
+};
