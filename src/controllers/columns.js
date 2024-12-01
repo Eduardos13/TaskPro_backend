@@ -1,3 +1,4 @@
+import { getBoardById } from '../services/boards.js';
 import {
   createColumn,
   deleteColumnById,
@@ -6,7 +7,21 @@ import {
 } from '../services/columns.js';
 
 export const createColumnController = async (req, res) => {
-  const column = await createColumn(req.body);
+  const { boardId, title } = req.body;
+
+  const board = await getBoardById(boardId);
+
+  if (!board) {
+    return res.status(404).json({
+      status: 404,
+      message: `Board with id ${boardId} is not found`,
+    });
+  }
+
+  const column = await createColumn({ title, board: boardId });
+
+  board.columns.push(column._id);
+  await board.save();
 
   res.status(201).send({
     status: 201,
