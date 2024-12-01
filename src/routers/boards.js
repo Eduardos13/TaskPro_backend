@@ -6,12 +6,18 @@ import {
   deleteBoardByIdController,
   getAllBoardsController,
 } from '../controllers/boards.js';
+import { validateBody } from '../middlewares/validateBody.js';
+import { createBoardValidationSchema } from '../validation/createBoardValidationSchema.js';
 
 const boardRouter = Router();
 
 boardRouter.use('boardId', validateMongoIdParam('boardId'));
 
-boardRouter.post('/', controllerWrapper(createBoardController));
+boardRouter.post(
+  '/',
+  validateBody(createBoardValidationSchema),
+  controllerWrapper(createBoardController),
+);
 
 boardRouter.get('/', controllerWrapper(getAllBoardsController));
 boardRouter.delete('/:boardId', controllerWrapper(deleteBoardByIdController));
