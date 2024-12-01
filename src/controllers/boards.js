@@ -16,9 +16,11 @@ export const createBoardController = async (req, res) => {
 };
 
 export const getAllBoardsController = async (req, res) => {
-  const boards = await getAllBoards();
+  const userId = req.user._id;
 
-  if (!boards) {
+  const boards = await getAllBoards(userId);
+
+  if (!boards || boards.length === 0) {
     res.status(404).json({
       status: 404,
       message: 'No boards have been found',
@@ -34,8 +36,16 @@ export const getAllBoardsController = async (req, res) => {
 
 export const getBoardByIdController = async (req, res) => {
   const { boardId } = req.params;
+  const userId = req.user._id;
 
   const board = await getBoardById(boardId);
+
+  if (!board || board.owner.toString() !== userId.toString()) {
+    return res.status(404).json({
+      status: 404,
+      message: `Board with id ${boardId} is not found`,
+    });
+  }
 
   res.status(200).json({
     status: 200,

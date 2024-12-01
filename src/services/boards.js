@@ -5,8 +5,8 @@ export const createBoard = async (payload, userId) => {
   return await boadrModel.create({ ...payload, owner: userId });
 };
 
-export const getAllBoards = async () => {
-  const boards = await boadrModel.find();
+export const getAllBoards = async (userId) => {
+  const boards = await boadrModel.find({ owner: userId });
   return boards;
 };
 
