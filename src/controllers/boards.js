@@ -6,7 +6,7 @@ import {
 } from '../services/boards.js';
 
 export const createBoardController = async (req, res) => {
-  const board = createBoard(req.body);
+  const board = await createBoard(req.body, req.user._id);
 
   res.status(201).send({
     status: 201,

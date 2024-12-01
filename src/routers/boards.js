@@ -9,8 +9,11 @@ import {
 } from '../controllers/boards.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createBoardValidationSchema } from '../validation/createBoardValidationSchema.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const boardRouter = Router();
+
+boardRouter.use('/', authenticate);
 
 boardRouter.use('boardId', validateMongoIdParam('boardId'));
 
