@@ -17,7 +17,7 @@ const boardSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'users',
-      required: false, // Later need to put true
+      required: true,
     },
     columns: [
       {

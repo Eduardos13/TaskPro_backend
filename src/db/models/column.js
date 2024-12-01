@@ -6,17 +6,17 @@ const columnSchema = new Schema(
       type: String,
       required: true,
     },
+    board: {
+      type: Schema.Types.ObjectId,
+      ref: 'boards',
+      required: true,
+    },
     cards: [
       {
         type: Schema.Types.ObjectId,
         ref: 'cards',
       },
     ],
-    board: {
-      type: Schema.Types.ObjectId,
-      ref: 'boards',
-      required: false, // put true later here
-    },
   },
   {
     timestamps: true,
