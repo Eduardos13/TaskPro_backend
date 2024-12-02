@@ -19,12 +19,12 @@ const cardSchema = new Schema(
       type: Date,
       required: false,
     },
-    boardId: {
+    board: {
       type: Schema.Types.ObjectId,
       ref: 'boards',
       required: true,
     },
-    columnId: {
+    column: {
       type: Schema.Types.ObjectId,
       ref: 'columns',
       required: true,
