@@ -22,7 +22,10 @@ export const createCardValidationSchema = Joi.object({
     .messages({
       'any.required': 'Priority is required',
     }),
-  date: Joi.date().messages({
+  date: Joi.date().optional().messages({
     'any.required': 'Date is required',
   }),
-}); // add validation of date later
+  columnId: Joi.string()
+    .required()
+    .regex(/^[0-9a-fA-F]{24}$/),
+});

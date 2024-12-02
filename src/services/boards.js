@@ -11,13 +11,19 @@ export const getAllBoards = async (userId) => {
 };
 
 export const getBoardById = async (boardId) => {
-  const board = await boadrModel.findById(boardId).populate('columns');
+  const board = await boadrModel.findById(boardId).populate({
+    path: 'columns',
+    populate: {
+      path: 'cards',
+      model: 'cards',
+    },
+  });
 
-  // if (!board) {
-  //   throw createHttpError(404, {
-  //     message: `Board with id ${boardId} doesnt exist`,
-  //   });
-  // }
+  if (!board) {
+    throw createHttpError(404, {
+      message: `Board with id ${boardId} doesnt exist`,
+    });
+  }
 
   return board;
 };

@@ -5,9 +5,31 @@ import {
   getCardById,
   updateCard,
 } from '../services/cards.js';
+import { getColumnById } from '../services/columns.js';
 
 export const createCardController = async (req, res) => {
-  const card = await createCard(req.body);
+  const { columnId, title, description, priority, date } = req.body;
+
+  const column = await getColumnById(columnId);
+
+  if (!column) {
+    return res.status(404).json({
+      status: 404,
+      message: `Column with id ${columnId} is not found`,
+    });
+  }
+
+  const card = await createCard({
+    title,
+    description,
+    priority,
+    date,
+    column: columnId,
+    board: column.board,
+  });
+
+  column.cards.push(card._id);
+  await column.save();
 
   res.status(201).send({
     status: 201,
