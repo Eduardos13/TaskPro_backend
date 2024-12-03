@@ -40,6 +40,7 @@ export const createColumnController = async (req, res) => {
 
 export const getAllColumnsController = async (req, res) => {
   const userId = req.user._id;
+
   const columns = await getAllColumns(userId);
 
   res.status(200).json({
