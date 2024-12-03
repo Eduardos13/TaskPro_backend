@@ -12,8 +12,11 @@ import { validateMongoIdParam } from '../middlewares/validateMongoIdParam.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createCardValidationSchema } from '../validation/createCardValidationSchema.js';
 import { updateCardValidationSchema } from '../validation/updateCardValidationSchema.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const cardsRouter = Router();
+
+cardsRouter.use('/', authenticate);
 
 cardsRouter.use('/:cardId', validateMongoIdParam('cardId'));
 

@@ -13,11 +13,13 @@ const cardSchema = new Schema(
     priority: {
       type: String,
       enum: ['without', 'low', 'medium', 'high'],
+      default: 'without',
       required: true,
     },
     date: {
       type: Date,
       required: false,
+      default: null,
     },
     board: {
       type: Schema.Types.ObjectId,

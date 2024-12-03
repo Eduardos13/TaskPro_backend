@@ -8,8 +8,16 @@ import {
 
 export const createColumnController = async (req, res) => {
   const { boardId, title } = req.body;
+  const userId = req.user._id;
 
   const board = await getBoardById(boardId);
+
+  if (board.owner.toString() !== userId.toString()) {
+    return res.status(403).json({
+      status: 403,
+      message: 'Access denied',
+    });
+  }
 
   if (!board) {
     return res.status(404).json({
@@ -31,19 +39,21 @@ export const createColumnController = async (req, res) => {
 };
 
 export const getAllColumnsController = async (req, res) => {
-  const columns = await getAllColumns();
+  const userId = req.user._id;
+  const columns = await getAllColumns(userId);
 
   res.status(200).json({
     status: 200,
     message: 'Successfully found all columns',
-    columns,
+    data: columns,
   });
 };
 
 export const getColumnByIdController = async (req, res) => {
   const { columnId } = req.params;
+  const userId = req.user._id;
 
-  const column = await getColumnById(columnId);
+  const column = await getColumnById(columnId, userId);
 
   res.status(200).json({
     status: 200,

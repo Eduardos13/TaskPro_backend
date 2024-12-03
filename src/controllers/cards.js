@@ -9,8 +9,16 @@ import { getColumnById } from '../services/columns.js';
 
 export const createCardController = async (req, res) => {
   const { columnId, title, description, priority, date } = req.body;
+  const userId = req.user._id;
 
   const column = await getColumnById(columnId);
+
+  if (column.board.owner.toString() !== userId.toString()) {
+    return res.status(403).json({
+      status: 403,
+      message: 'Access denied',
+    });
+  }
 
   if (!column) {
     return res.status(404).json({
@@ -25,7 +33,7 @@ export const createCardController = async (req, res) => {
     priority,
     date,
     column: columnId,
-    board: column.board,
+    board: column.board._id,
   });
 
   column.cards.push(card._id);
@@ -67,7 +75,8 @@ export const putCardController = async (req, res) => {
 };
 
 export const getAllCardsController = async (req, res) => {
-  const cards = await getAllCards();
+  const userId = req.user._id;
+  const cards = await getAllCards(userId);
 
   res.status(200).json({
     status: 200,
@@ -78,8 +87,9 @@ export const getAllCardsController = async (req, res) => {
 
 export const getCardByIdController = async (req, res, next) => {
   const { cardId } = req.params;
+  const userId = req.user._id;
 
-  const card = await getCardById(cardId);
+  const card = await getCardById(cardId, userId);
 
   res.status(200).json({
     status: 200,

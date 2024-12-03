@@ -24,13 +24,17 @@ export const updateCard = async (cardId, payload, options = {}) => {
   };
 };
 
-export const getAllCards = async () => {
-  const cards = await cardsModel.find(); // Add boardID later
+export const getAllCards = async (userId) => {
+  const cards = await cardsModel
+    .find()
+    .populate('board')
+    .where('board.owner')
+    .equals(userId);
   return cards;
 };
 
-export const getCardById = async (cardId) => {
-  const card = await cardsModel.findById({ _id: cardId });
+export const getCardById = async (cardId, userId) => {
+  const card = await cardsModel.findById({ _id: cardId }).populate('board');
 
   if (!card) {
     throw createHttpError(404, {
@@ -38,6 +42,9 @@ export const getCardById = async (cardId) => {
     });
   }
 
+  if (card.board.owner.toString() !== userId.toString()) {
+    throw createHttpError(403, 'Access denied');
+  }
   return card;
 };
 
