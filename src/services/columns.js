@@ -5,12 +5,21 @@ export const createColumn = async (payload) => {
   return await columnModel.create(payload);
 };
 
+// export const getAllColumns = async (userId) => {
+//   const columns = await columnModel
+//     .find()
+//     .populate('board')
+//     .where('board.owner')
+//     .equals(userId);
+
+//   return columns;
+// };
+
 export const getAllColumns = async (userId) => {
-  const columns = await columnModel
-    .find()
-    .populate('board')
-    .where('board.owner')
-    .equals(userId);
+  const columns = await columnModel.find().populate({
+    path: 'board',
+    match: { owner: userId },
+  });
 
   return columns;
 };

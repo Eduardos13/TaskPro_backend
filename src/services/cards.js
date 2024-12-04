@@ -24,12 +24,22 @@ export const updateCard = async (cardId, payload, options = {}) => {
   };
 };
 
+// export const getAllCards = async (userId) => {
+//   const cards = await cardsModel
+//     .find()
+//     .populate('board')
+//     .where('board.owner')
+//     .equals(userId);
+
+//   return cards;
+// };
+
 export const getAllCards = async (userId) => {
-  const cards = await cardsModel
-    .find()
-    .populate('board')
-    .where('board.owner')
-    .equals(userId);
+  const cards = await cardsModel.find().populate({
+    path: 'board',
+    match: { owner: userId },
+  });
+
   return cards;
 };
 
