@@ -6,6 +6,7 @@ import {
   deleteBoardByIdController,
   getAllBoardsController,
   getBoardByIdController,
+  updateBoardByIdController,
 } from '../controllers/boards.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { createBoardValidationSchema } from '../validation/createBoardValidationSchema.js';
@@ -22,6 +23,8 @@ boardRouter.post(
   validateBody(createBoardValidationSchema),
   controllerWrapper(createBoardController),
 );
+
+boardRouter.patch('/:boardId', controllerWrapper(updateBoardByIdController));
 
 boardRouter.get('/', controllerWrapper(getAllBoardsController));
 boardRouter.get('/:boardId', controllerWrapper(getBoardByIdController));

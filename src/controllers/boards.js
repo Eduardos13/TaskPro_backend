@@ -3,6 +3,7 @@ import {
   deleteBoardById,
   getAllBoards,
   getBoardById,
+  updateBoardById,
 } from '../services/boards.js';
 
 export const createBoardController = async (req, res) => {
@@ -12,6 +13,19 @@ export const createBoardController = async (req, res) => {
     status: 201,
     message: 'Successfully created a new board',
     data: board,
+  });
+};
+
+export const updateBoardByIdController = async (req, res) => {
+  const { boardId } = req.params;
+  const updateData = req.body;
+
+  const updatedBoard = await updateBoardById(boardId, updateData);
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated board with id ${boardId}`,
+    data: updatedBoard,
   });
 };
 

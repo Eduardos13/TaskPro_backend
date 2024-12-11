@@ -5,6 +5,18 @@ export const createBoard = async (payload, userId) => {
   return await boadrModel.create({ ...payload, owner: userId });
 };
 
+export const updateBoardById = async (boardId, updateData) => {
+  const updatedBoard = await boadrModel.findByIdAndUpdate(boardId, updateData, {
+    new: true,
+  });
+
+  if (!updatedBoard) {
+    throw createHttpError(404, `Board with id ${boardId} doesn't exist`);
+  }
+
+  return updatedBoard;
+};
+
 export const getAllBoards = async (userId) => {
   const boards = await boadrModel.find({ owner: userId });
   return boards;
