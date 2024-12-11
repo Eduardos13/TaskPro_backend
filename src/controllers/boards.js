@@ -18,9 +18,9 @@ export const createBoardController = async (req, res) => {
 
 export const updateBoardByIdController = async (req, res) => {
   const { boardId } = req.params;
-  const updateData = req.body;
+  const { body } = req;
 
-  const updatedBoard = await updateBoardById(boardId, updateData);
+  const updatedBoard = await updateBoardById(boardId, body);
 
   res.status(200).json({
     status: 200,

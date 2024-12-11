@@ -41,9 +41,9 @@ export const createColumnController = async (req, res) => {
 
 export const updateColumnByIdController = async (req, res) => {
   const { columnId } = req.params;
-  const updateData = req.body;
+  const { body } = req;
 
-  const updatedColumn = await updateColumnById(columnId, updateData);
+  const updatedColumn = await updateColumnById(columnId, body);
 
   res.status(200).json({
     status: 200,

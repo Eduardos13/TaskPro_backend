@@ -5,8 +5,8 @@ export const createBoard = async (payload, userId) => {
   return await boadrModel.create({ ...payload, owner: userId });
 };
 
-export const updateBoardById = async (boardId, updateData) => {
-  const updatedBoard = await boadrModel.findByIdAndUpdate(boardId, updateData, {
+export const updateBoardById = async (boardId, payload) => {
+  const updatedBoard = await boadrModel.findByIdAndUpdate(boardId, payload, {
     new: true,
   });
 
