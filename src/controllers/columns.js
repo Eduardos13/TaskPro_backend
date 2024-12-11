@@ -4,6 +4,7 @@ import {
   deleteColumnById,
   getAllColumns,
   getColumnById,
+  updateColumnById,
 } from '../services/columns.js';
 
 export const createColumnController = async (req, res) => {
@@ -35,6 +36,19 @@ export const createColumnController = async (req, res) => {
     status: 201,
     message: 'Successfully created a new column',
     data: column,
+  });
+};
+
+export const updateColumnByIdController = async (req, res) => {
+  const { columnId } = req.params;
+  const updateData = req.body;
+
+  const updatedColumn = await updateColumnById(columnId, updateData);
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully updated column with id ${columnId}`,
+    data: updatedColumn,
   });
 };
 
