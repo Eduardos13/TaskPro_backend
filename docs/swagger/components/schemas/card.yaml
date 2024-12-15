@@ -1,0 +1,38 @@
+type: object
+required:
+  - title
+  - description
+  - priority
+  - date
+properties:
+  _id:
+    description: "Card's id"
+    type: string
+    example: '65ca67e7ae7f10c88b598384'
+  title:
+    description: 'Tasks title'
+    type: string
+    example: 'Clean up the house'
+  description:
+    description: 'Shortly about the task'
+    type: string
+    example: 'What do I need to do to clean up the house'
+  priority:
+    description: 'How fast this task need to be done'
+    type: string
+    enum: ['without', 'low', 'medium', high]
+    example: 'low'
+    default: 'without'
+  date:
+    description: 'Deadline for the task'
+    type: string
+    format: date
+    example: '12/13/2024'
+  column:
+    description: 'Column for this card'
+    type: string
+    example: 'In progress'
+  owner:
+    description: 'Id of user who created a board with column that has this cards'
+    type: string
+    example: '65ca67e7ae7f10c88b598384'

@@ -14,7 +14,10 @@ tags:
 servers:
   - url: http://localhost:3000
   - url: https://taskpro-backend-y1x7.onrender.com
-# paths:
+paths:
+  /cards/{id}:
+    get:
+      $ref: swagger/path/cards/{id}/get.yaml
 components:
   securitySchemes:
     bearerAuth:
