@@ -7,6 +7,7 @@ import { ENV_VARS } from './constants/index.js';
 import { errorHandlerMiddleware } from './middlewares/errorHandler.js';
 import { notFoundMiddleware } from './middlewares/notFound.js';
 import router from './routers/index.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 const PORT = env(ENV_VARS.PORT, 3000);
 
@@ -38,6 +39,8 @@ export const startServer = () => {
   });
 
   app.use(router);
+
+  app.use('/api-docs', swaggerDocs());
 
   app.use('*', notFoundMiddleware);
 

@@ -27,11 +27,201 @@
       "description": "Auth operations."
     }
   ],
+  "paths": {
+    "/cards/{id}": {
+      "get": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Get cartd by id",
+        "operationId": "getCard",
+        "description": "Get card by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MongoBD ID format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get card by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found card with id 65ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/card"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_card"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "card": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "priority",
+          "date"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Card's id",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
+          },
+          "title": {
+            "description": "Tasks title",
+            "type": "string",
+            "example": "Clean up the house"
+          },
+          "description": {
+            "description": "Shortly about the task",
+            "type": "string",
+            "example": "What do I need to do to clean up the house"
+          },
+          "priority": {
+            "description": "How fast this task need to be done",
+            "type": "string",
+            "enum": [
+              "without",
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "low",
+            "default": "without"
+          },
+          "date": {
+            "description": "Deadline for the task",
+            "type": "string",
+            "format": "date",
+            "example": "12/13/2024"
+          },
+          "column": {
+            "description": "Column for this card",
+            "type": "string",
+            "example": "In progress"
+          },
+          "owner": {
+            "description": "Id of user who created a board with column that has this cards",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Auth token is expired"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_card": {
+        "description": "Card not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Card not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Card not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
