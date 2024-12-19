@@ -7,10 +7,18 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of a Task Pro app
 tags:
-  - name: Tasks
-    description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: Users
+    description: User profile and setings operations
+  - name: Boards
+    description: Operations for managing boards
+  - name: Columns
+    description: Operations for managing columns
+  - name: Cards
+    description: Operations for managing cards
+  - name: Help
+    description: Possibility of sending a help request to address edik.kozelsky@gmail.com
 servers:
   - url: http://localhost:3000
   - url: https://taskpro-backend-y1x7.onrender.com
