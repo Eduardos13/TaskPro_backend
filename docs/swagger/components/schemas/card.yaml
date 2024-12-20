@@ -5,34 +5,41 @@ required:
   - priority
   - date
 properties:
-  _id:
-    description: "Card's id"
-    type: string
-    example: '65ca67e7ae7f10c88b598384'
-  title:
-    description: 'Tasks title'
-    type: string
-    example: 'Clean up the house'
-  description:
-    description: 'Shortly about the task'
-    type: string
-    example: 'What do I need to do to clean up the house'
-  priority:
-    description: 'How fast this task need to be done'
-    type: string
-    enum: ['without', 'low', 'medium', high]
-    example: 'low'
-    default: 'without'
   date:
-    description: 'Deadline for the task'
+    description: Deadline for the task
     type: string
     format: date
-    example: '12/13/2024'
+    example: 12/13/2024
+    default: null
+  _id:
+    description: Card's id MongoDB format
+    type: string
+    example: 65ca67e7ae7f10c88b598384
+  title:
+    description: Card's title
+    type: string
+    example: Clean up the house
+  description:
+    description: Shortly about the task
+    type: string
+    example: What do I need to do to clean up the house
+  priority:
+    description: How fast this task need to be done
+    type: string
+    enum: ['without', 'low', 'medium', high]
+    example: low
+    default: without
   column:
-    description: 'Column for this card'
+    description: ID of column this card belongs to
     type: string
-    example: 'In progress'
-  owner:
-    description: 'Id of user who created a board with column that has this cards'
+    example: 674d2dc8cd2bd097bcdf503e
+  createdAt:
+    description: Date and time when card was created
     type: string
-    example: '65ca67e7ae7f10c88b598384'
+    format: date-time
+    example: '2024-12-02T03:50:19.232Z'
+  updatedAt:
+    description: Date and time when card was updated last time
+    type: string
+    format: date-time
+    example: '2024-12-11T00:50:02.166Z'

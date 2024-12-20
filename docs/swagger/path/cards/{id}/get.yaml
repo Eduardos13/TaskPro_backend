@@ -23,7 +23,7 @@ responses:
           required:
             - status
             - message
-            - data
+            - card
           properties:
             status:
               type: integer
@@ -31,7 +31,7 @@ responses:
             message:
               type: string
               example: Successfully found card with id 65ca67e7ae7f10c88b598384!
-            data:
+            card:
               type: object
               $ref: ../../../components/schemas/card.yaml
   '401':

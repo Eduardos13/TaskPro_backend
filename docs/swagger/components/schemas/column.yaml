@@ -1,0 +1,27 @@
+type: object
+required:
+  - title
+properties:
+  _id:
+    description: Column's ID MongoDB format
+    type: string
+    example: 674d2dc8cd2bd097bcdf503e
+  title:
+    description: Column's title
+    type: string
+    example: In progress
+  cards:
+    description: List of cards from this column
+    type: array
+    items:
+      $ref: '../schemas/card.yaml'
+  createdAt:
+    description: Date and time when column was created
+    type: string
+    format: date-time
+    example: '2024-12-02T03:50:19.232Z'
+  updatedAt:
+    description: Date and time when column was updated last time
+    type: string
+    format: date-time
+    example: '2024-12-11T00:50:02.166Z'

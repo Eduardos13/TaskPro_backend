@@ -1,0 +1,93 @@
+type: object
+required:
+  - title
+properties:
+  _id:
+    description: Board's ID MongoDB format
+    type: string
+    example: 674d2cf2d0824f62a4f3f9d3
+  title:
+    description: Board's title
+    type: string
+    example: Home tasks
+    background:
+      description: Background image for the board
+      type: string
+      enum:
+        [
+          default-bg-mob,
+          bg1-2x-mob.jpg,
+          bg2-2x-mob.jpg,
+          bg3-2x-mob.jpg,
+          bg4-2x-mob.jpg,
+          bg5-2x-mob.jpg,
+          bg6-2x-mob.jpg,
+          bg7-2x-mob.jpg,
+          bg8-2x-mob.jpg,
+          bg9-2x-mob.jpg,
+          bg10-2x-mob.jpg,
+          bg11-2x-mob.jpg,
+          bg12-2x-mob.jpg,
+          bg13-2x-mob.jpg,
+          bg14-2x-mob.jpg,
+          bg15-2x-mob.jpg,
+          default-bg-tab,
+          bg1-2x-tab.jpg,
+          bg2-2x-tab.jpg,
+          bg3-2x-tab.jpg,
+          bg4-2x-tab.jpg,
+          bg5-2x-tab.jpg,
+          bg6-2x-tab.jpg,
+          bg7-2x-tab.jpg,
+          bg8-2x-tab.jpg,
+          bg9-2x-tab.jpg,
+          bg10-2x-tab.jpg,
+          bg11-2x-tab.jpg,
+          bg12-2x-tab.jpg,
+          bg13-2x-tab.jpg,
+          bg14-2x-tab.jpg,
+          bg15-2x-tab.jpg,
+          default-bg-desk,
+          bg1-2x-desk.jpg,
+          bg2-2x-desk.jpg,
+          bg3-2x-desk.jpg,
+          bg4-2x-desk.jpg,
+          bg5-2x-desk.jpg,
+          bg6-2x-desk.jpg,
+          bg7-2x-desk.jpg,
+          bg8-2x-desk.jpg,
+          bg9-2x-desk.jpg,
+          bg10-2x-desk.jpg,
+          bg11-2x-desk.jpg,
+          bg12-2x-desk.jpg,
+          bg13-2x-desk.jpg,
+          bg14-2x-desk.jpg,
+          bg15-2x-desk.jpg,
+        ]
+      example: default-bg-desk
+      default: default-bg-desk
+    icon:
+      description: Icon for the board
+      type: string
+      enum: [4dot, star, circle, puzzle, cube, lightning, 3-circle, octagon]
+      example: 4dot
+      default: 4dot
+    owner:
+      description: ID of user who created the board
+      type: string
+      example: 67467d26dcac8fc709d7cd89
+    columns:
+      description: List of columns of this board
+      type: array
+      items:
+        $ref: '../schemas/column.yaml'
+    createdAt:
+      description: Date and time when board was created
+      type: string
+      format: date-time
+      example: '2024-12-02T03:50:19.232Z'
+    updatedAt:
+      description: Date and time when board was updated last time
+      type: string
+      format: date-time
+      example: '2024-12-11T00:50:02.166Z'
