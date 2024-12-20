@@ -25,7 +25,9 @@ servers:
 paths:
   /cards/{id}:
     get:
-      $ref: swagger/path/cards/{id}/get.yaml
+      $ref: '../docs/swagger/path/cards/{id}/get.yaml'
+    delete:
+      $ref: '../docs/swagger/path/cards/{id}/delete.yaml'
 components:
   securitySchemes:
     bearerAuth:
