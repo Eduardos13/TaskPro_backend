@@ -503,6 +503,63 @@
           }
         }
       }
+    },
+    "/columns": {
+      "get": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Get all columns",
+        "operationId": "getAllColumns",
+        "description": "Get all columns",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found all columns"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/column"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_column"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -513,110 +570,6 @@
       }
     },
     "schemas": {
-      "card": {
-        "type": "object",
-        "required": [
-          "title",
-          "description",
-          "priority",
-          "date"
-        ],
-        "properties": {
-          "date": {
-            "description": "Deadline for the task",
-            "type": "string",
-            "format": "date",
-            "example": "12/13/2024",
-            "default": null
-          },
-          "_id": {
-            "description": "Card's id MongoDB format",
-            "type": "string",
-            "example": "65ca67e7ae7f10c88b598384"
-          },
-          "title": {
-            "description": "Card's title",
-            "type": "string",
-            "example": "Clean up the house"
-          },
-          "description": {
-            "description": "Shortly about the task",
-            "type": "string",
-            "example": "What do I need to do to clean up the house"
-          },
-          "priority": {
-            "description": "How fast this task need to be done",
-            "type": "string",
-            "enum": [
-              "without",
-              "low",
-              "medium",
-              "high"
-            ],
-            "example": "low",
-            "default": "without"
-          },
-          "board": {
-            "description": "Board this card belong to",
-            "type": "object",
-            "$ref": "#/components/schemas/board"
-          },
-          "column": {
-            "description": "ID of column this card belongs to",
-            "type": "string",
-            "example": "674d2dc8cd2bd097bcdf503e"
-          },
-          "createdAt": {
-            "description": "Date and time when card was created",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-02T03:50:19.232Z"
-          },
-          "updatedAt": {
-            "description": "Date and time when card was updated last time",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-11T00:50:02.166Z"
-          }
-        }
-      },
-      "column": {
-        "type": "object",
-        "required": [
-          "title"
-        ],
-        "properties": {
-          "_id": {
-            "description": "Column's ID MongoDB format",
-            "type": "string",
-            "example": "674d2dc8cd2bd097bcdf503e"
-          },
-          "title": {
-            "description": "Column's title",
-            "type": "string",
-            "example": "In progress"
-          },
-          "cards": {
-            "description": "List of cards from this column",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/card"
-            }
-          },
-          "createdAt": {
-            "description": "Date and time when column was created",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-02T03:50:19.232Z"
-          },
-          "updatedAt": {
-            "description": "Date and time when column was updated last time",
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-12-11T00:50:02.166Z"
-          }
-        }
-      },
       "board": {
         "type": "object",
         "required": [
@@ -725,6 +678,115 @@
           },
           "updatedAt": {
             "description": "Date and time when board was updated last time",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-11T00:50:02.166Z"
+          }
+        }
+      },
+      "card": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "priority",
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "description": "Deadline for the task",
+            "type": "string",
+            "format": "date",
+            "example": "12/13/2024",
+            "default": null
+          },
+          "_id": {
+            "description": "Card's id MongoDB format",
+            "type": "string",
+            "example": "65ca67e7ae7f10c88b598384"
+          },
+          "title": {
+            "description": "Card's title",
+            "type": "string",
+            "example": "Clean up the house"
+          },
+          "description": {
+            "description": "Shortly about the task",
+            "type": "string",
+            "example": "What do I need to do to clean up the house"
+          },
+          "priority": {
+            "description": "How fast this task need to be done",
+            "type": "string",
+            "enum": [
+              "without",
+              "low",
+              "medium",
+              "high"
+            ],
+            "example": "low",
+            "default": "without"
+          },
+          "board": {
+            "description": "Board this card belong to",
+            "type": "object",
+            "$ref": "#/components/schemas/board"
+          },
+          "column": {
+            "description": "ID of column this card belongs to",
+            "type": "string",
+            "example": "674d2dc8cd2bd097bcdf503e"
+          },
+          "createdAt": {
+            "description": "Date and time when card was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-02T03:50:19.232Z"
+          },
+          "updatedAt": {
+            "description": "Date and time when card was updated last time",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-11T00:50:02.166Z"
+          }
+        }
+      },
+      "column": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Column's ID MongoDB format",
+            "type": "string",
+            "example": "674d2dc8cd2bd097bcdf503e"
+          },
+          "title": {
+            "description": "Column's title",
+            "type": "string",
+            "example": "In progress"
+          },
+          "board": {
+            "description": "Board this column belongs to",
+            "type": "object",
+            "$ref": "#/components/schemas/board"
+          },
+          "cards": {
+            "description": "List of cards from this column",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/card"
+            }
+          },
+          "createdAt": {
+            "description": "Date and time when column was created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-02T03:50:19.232Z"
+          },
+          "updatedAt": {
+            "description": "Date and time when column was updated last time",
             "type": "string",
             "format": "date-time",
             "example": "2024-12-11T00:50:02.166Z"
@@ -857,6 +919,43 @@
                     "message": {
                       "type": "string",
                       "example": "Card not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_column": {
+        "description": "Column not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Column not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Column not found"
                     }
                   }
                 }

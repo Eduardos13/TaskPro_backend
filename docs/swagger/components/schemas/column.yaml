@@ -10,6 +10,10 @@ properties:
     description: Column's title
     type: string
     example: In progress
+  board:
+    description: Board this column belongs to
+    type: object
+    $ref: board.yaml
   cards:
     description: List of cards from this column
     type: array

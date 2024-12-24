@@ -35,6 +35,9 @@ paths:
       $ref: '../docs/swagger/path/cards/{id}/patch.yaml'
     delete:
       $ref: '../docs/swagger/path/cards/{id}/delete.yaml'
+  /columns:
+    get:
+      $ref: '../docs/swagger/path/columns/get.yaml'
 components:
   securitySchemes:
     bearerAuth:
