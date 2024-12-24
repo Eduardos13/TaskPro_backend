@@ -1,0 +1,35 @@
+tags:
+  - Cards
+summary: Get all cards
+operationId: getAllCards
+description: 'Get all cards'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Get all cards'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - cards
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found all cards
+            cards:
+              type: array
+              items:
+                $ref: '#/components/schemas/card.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404_card.yaml'
+  '500':
+    $ref: ../../../components/responses/500.yaml
