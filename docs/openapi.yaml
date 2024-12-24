@@ -31,6 +31,8 @@ paths:
   /cards/{id}:
     get:
       $ref: '../docs/swagger/path/cards/{id}/get.yaml'
+    patch:
+      $ref: '../docs/swagger/path/cards/{id}/patch.yaml'
     delete:
       $ref: '../docs/swagger/path/cards/{id}/delete.yaml'
 components:

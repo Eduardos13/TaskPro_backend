@@ -308,6 +308,162 @@
           }
         }
       },
+      "patch": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Update a card",
+        "operationId": "updateCard",
+        "description": "Update a card",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Card's id MongoDB format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "New title of a card",
+                    "example": "Wash the dishes"
+                  },
+                  "descriptio": {
+                    "type": "string",
+                    "description": "New description of a card",
+                    "example": "Wash and dry all dishes in a sink"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "description": "New priority level of a card",
+                    "example": "medium",
+                    "default": "without"
+                  },
+                  "columnId": {
+                    "type": "string",
+                    "description": "New column ID MongoDB format of a column this card transferred to",
+                    "example": "65ca67e7ae7f10c88b598384"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "New deadline date for a card",
+                    "example": "12/15/2024"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated a card"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "Wash the dishes"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Shortly about what to do"
+                        },
+                        "priority": {
+                          "type": "string",
+                          "description": "How fast this task need to be done",
+                          "example": "high",
+                          "default": "without"
+                        },
+                        "date": {
+                          "type": "string",
+                          "description": "Date due for this task",
+                          "format": "date",
+                          "example": "12/13/2024",
+                          "default": null
+                        },
+                        "board": {
+                          "type": "string",
+                          "description": "MongoDB format ID of board this card created at",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "column": {
+                          "type": "string",
+                          "description": "MongoDB format ID of column this card belong to",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "description": "MongoDB format ID of a new card",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "createdAt": {
+                          "description": "Date and time when card was created",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-02T03:50:19.232Z"
+                        },
+                        "updatedAt": {
+                          "description": "Date and time when card was updated last time",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-11T00:50:02.166Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_card"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Cards"
