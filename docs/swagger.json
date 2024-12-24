@@ -79,7 +79,7 @@
                   "required": [
                     "status",
                     "message",
-                    "data"
+                    "card"
                   ],
                   "properties": {
                     "status": {
@@ -90,7 +90,7 @@
                       "type": "string",
                       "example": "Successfully found card with id 65ca67e7ae7f10c88b598384!"
                     },
-                    "data": {
+                    "card": {
                       "type": "object",
                       "$ref": "#/components/schemas/card"
                     }
@@ -98,6 +98,45 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_card"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cards"
+        ],
+        "summary": "Delete card by ID",
+        "operationId": "deleteCard",
+        "description": "Deleting card by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MongoDB ID format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleting the card"
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -126,13 +165,20 @@
           "date"
         ],
         "properties": {
+          "date": {
+            "description": "Deadline for the task",
+            "type": "string",
+            "format": "date",
+            "example": "12/13/2024",
+            "default": null
+          },
           "_id": {
-            "description": "Card's id",
+            "description": "Card's id MongoDB format",
             "type": "string",
             "example": "65ca67e7ae7f10c88b598384"
           },
           "title": {
-            "description": "Tasks title",
+            "description": "Card's title",
             "type": "string",
             "example": "Clean up the house"
           },
@@ -153,21 +199,22 @@
             "example": "low",
             "default": "without"
           },
-          "date": {
-            "description": "Deadline for the task",
-            "type": "string",
-            "format": "date",
-            "example": "12/13/2024"
-          },
           "column": {
-            "description": "Column for this card",
+            "description": "ID of column this card belongs to",
             "type": "string",
-            "example": "In progress"
+            "example": "674d2dc8cd2bd097bcdf503e"
           },
-          "owner": {
-            "description": "Id of user who created a board with column that has this cards",
+          "createdAt": {
+            "description": "Date and time when card was created",
             "type": "string",
-            "example": "65ca67e7ae7f10c88b598384"
+            "format": "date-time",
+            "example": "2024-12-02T03:50:19.232Z"
+          },
+          "updatedAt": {
+            "description": "Date and time when card was updated last time",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-12-11T00:50:02.166Z"
           }
         }
       }
@@ -196,6 +243,43 @@
                 "error": {
                   "type": "string",
                   "example": "Auth token is expired"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error. Please try again later"
+                    }
+                  }
                 }
               }
             }
