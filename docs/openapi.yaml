@@ -24,7 +24,8 @@ servers:
   - url: https://taskpro-backend-y1x7.onrender.com
 paths:
   /cards:
-    $ref: '../docs/swagger/path/cards/get.yaml'
+    get:
+      $ref: '../docs/swagger/path/cards/get.yaml'
   /cards/{id}:
     get:
       $ref: '../docs/swagger/path/cards/{id}/get.yaml'

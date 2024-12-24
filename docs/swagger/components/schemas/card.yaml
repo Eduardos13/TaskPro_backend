@@ -29,6 +29,10 @@ properties:
     enum: ['without', 'low', 'medium', high]
     example: low
     default: without
+  board:
+    description: Board this card belong to
+    type: object
+    $ref: board.yaml
   column:
     description: ID of column this card belongs to
     type: string
