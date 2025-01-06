@@ -38,6 +38,9 @@ paths:
   /columns:
     get:
       $ref: '../docs/swagger/path/columns/get.yaml'
+  /columns/{id}:
+    get:
+      $ref: '../docs/swagger/path/columns/{id}/get.yaml'
 components:
   securitySchemes:
     bearerAuth:
