@@ -1,8 +1,8 @@
 tags:
-  - Cards
-summary: Create a new card
-operationId: createCard
-description: 'Create a new card'
+  - Columns
+summary: Create a new column
+operationId: createColumn
+description: 'Create a new column'
 security:
   - bearerAuth: []
 requestBody:
@@ -13,26 +13,15 @@ requestBody:
         type: object
         required:
           - title
-          - description
-          - priority
-          - columnId
+          - boardId
         properties:
           title:
             type: string
-            description: Title of a new card
-            example: Wash the dishes
-          descriptio:
+            description: Title of a new column
+            example: Study tasks
+          boardId:
             type: string
-            description: Shortly about what to do
-            example: Wash and dry all dishes in a sink
-          priority:
-            type: string
-            description: How fast to do this task
-            example: medium
-            default: without
-          columnId:
-            type: string
-            description: Column ID MongoDB format of a column this card belongs to
+            description: Board ID MongoDB format of a board this column belongs to
             example: 65ca67e7ae7f10c88b598384
 responses:
   '201':
@@ -51,35 +40,21 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully created a new card
+              example: Successfully created a new column
             data:
               type: object
               properties:
                 title:
                   type: string
-                  example: Wash the dishes
-                description:
-                  type: string
-                  example: Shortly about what to do
-                priority:
-                  type: string
-                  description: How fast this task need to be done
-                  example: high
-                  default: without
-                date:
-                  type: string
-                  description: Date due for this task
-                  format: date
-                  example: 12/13/2024
-                  default: null
+                  example: Study tasks
                 board:
                   type: string
                   description: MongoDB format ID of board this card created at
                   example: 65ca67e7ae7f10c88b598384
-                column:
+                cards:
                   type: string
-                  description: MongoDB format ID of column this card belong to
-                  example: 65ca67e7ae7f10c88b598384
+                  example: []
+                  description: New column can't have cards inside, so it's always an empty array
                 _id:
                   type: string
                   description: MongoDB format ID of a new card

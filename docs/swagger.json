@@ -111,7 +111,7 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",
@@ -505,6 +505,117 @@
       }
     },
     "/columns": {
+      "post": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Create a new column",
+        "operationId": "createColumn",
+        "description": "Create a new column",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "boardId"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Title of a new column",
+                    "example": "Study tasks"
+                  },
+                  "boardId": {
+                    "type": "string",
+                    "description": "Board ID MongoDB format of a board this column belongs to",
+                    "example": "65ca67e7ae7f10c88b598384"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created a new column"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "Study tasks"
+                        },
+                        "board": {
+                          "type": "string",
+                          "description": "MongoDB format ID of board this card created at",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "cards": {
+                          "type": "string",
+                          "example": [],
+                          "description": "New column can't have cards inside, so it's always an empty array"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "description": "MongoDB format ID of a new card",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "createdAt": {
+                          "description": "Date and time when card was created",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-02T03:50:19.232Z"
+                        },
+                        "updatedAt": {
+                          "description": "Date and time when card was updated last time",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-11T00:50:02.166Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
       "get": {
         "tags": [
           "Columns"
@@ -618,6 +729,163 @@
           },
           "400": {
             "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_column"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Update a column",
+        "operationId": "updateColumn",
+        "description": "Update a cacolumnrd",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Column's id MongoDB format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "New title of a column",
+                    "example": "Home tasks"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated column with id 65ca67e7ae7f10c88b598384"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "MongoDB format ID of a column",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "Home tasks"
+                        },
+                        "board": {
+                          "type": "string",
+                          "description": "MongoDB format ID of board this card created at",
+                          "example": "65ca67e7ae7f10c88b598384"
+                        },
+                        "cards": {
+                          "type": "array",
+                          "example": [
+                            "674d2e7bcad701f411d7fb66"
+                          ]
+                        },
+                        "createdAt": {
+                          "description": "Date and time when card was created",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-02T03:50:19.232Z"
+                        },
+                        "updatedAt": {
+                          "description": "Date and time when card was updated last time",
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-12-11T00:50:02.166Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_column"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Columns"
+        ],
+        "summary": "Delete column by ID",
+        "operationId": "deleteColumn",
+        "description": "Deleting column by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MongoDB ID format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
           },
           "401": {
             "$ref": "#/components/responses/401"
