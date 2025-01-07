@@ -21,7 +21,7 @@ requestBody:
             type: string
             description: Title of a new card
             example: Wash the dishes
-          descriptio:
+          description:
             type: string
             description: Shortly about what to do
             example: Wash and dry all dishes in a sink
