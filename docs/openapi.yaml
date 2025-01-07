@@ -23,6 +23,9 @@ servers:
   - url: http://localhost:3000
   - url: https://taskpro-backend-y1x7.onrender.com
 paths:
+  /boards:
+    post:
+      $ref: '../docs/swagger/path/boards/post.yaml'
   /cards:
     post:
       $ref: '../docs/swagger/path/cards/post.yaml'

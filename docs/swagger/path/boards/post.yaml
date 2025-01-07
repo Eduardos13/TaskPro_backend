@@ -1,0 +1,142 @@
+tags:
+  - Boards
+summary: Create a new board
+operationId: createBoard
+description: 'Create a new board'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - title
+        properties:
+          title:
+            type: string
+            description: Title of a new board
+            example: My board
+          background:
+            type: string
+            description: A background image for a new board
+            enum:
+              [
+                default-bg-mob,
+                bg1-2x-mob.jpg,
+                bg2-2x-mob.jpg,
+                bg3-2x-mob.jpg,
+                bg4-2x-mob.jpg,
+                bg5-2x-mob.jpg,
+                bg6-2x-mob.jpg,
+                bg7-2x-mob.jpg,
+                bg8-2x-mob.jpg,
+                bg9-2x-mob.jpg,
+                bg10-2x-mob.jpg,
+                bg11-2x-mob.jpg,
+                bg12-2x-mob.jpg,
+                bg13-2x-mob.jpg,
+                bg14-2x-mob.jpg,
+                bg15-2x-mob.jpg,
+                default-bg-tab,
+                bg1-2x-tab.jpg,
+                bg2-2x-tab.jpg,
+                bg3-2x-tab.jpg,
+                bg4-2x-tab.jpg,
+                bg5-2x-tab.jpg,
+                bg6-2x-tab.jpg,
+                bg7-2x-tab.jpg,
+                bg8-2x-tab.jpg,
+                bg9-2x-tab.jpg,
+                bg10-2x-tab.jpg,
+                bg11-2x-tab.jpg,
+                bg12-2x-tab.jpg,
+                bg13-2x-tab.jpg,
+                bg14-2x-tab.jpg,
+                bg15-2x-tab.jpg,
+                default-bg-desk,
+                bg1-2x-desk.jpg,
+                bg2-2x-desk.jpg,
+                bg3-2x-desk.jpg,
+                bg4-2x-desk.jpg,
+                bg5-2x-desk.jpg,
+                bg6-2x-desk.jpg,
+                bg7-2x-desk.jpg,
+                bg8-2x-desk.jpg,
+                bg9-2x-desk.jpg,
+                bg10-2x-desk.jpg,
+                bg11-2x-desk.jpg,
+                bg12-2x-desk.jpg,
+                bg13-2x-desk.jpg,
+                bg14-2x-desk.jpg,
+                bg15-2x-desk.jpg,
+              ]
+            example: default-bg-desk
+            default: default-bg-desk
+          icon:
+            type: string
+            description: Icon image for a new board
+            enum:
+              [4dot, star, circle, puzzle, cube, lightning, 3-circle, octagon]
+            example: 4dot
+            default: 4dot
+responses:
+  '201':
+    description: 'Created'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a new board
+            data:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title of a new board
+                  example: My board
+                background:
+                  type: string
+                  example: default-bg-desk
+                icon:
+                  description: Icon image for a new board
+                  example: 4dot
+                owner:
+                  type: string
+                  description: ID of user who created the board
+                  example: 67467d26dcac8fc709d7cd89
+                columns:
+                  type: array
+                  description: Array of a columns in this board. A new board can't have columns, so it's an empty array always
+                  example: []
+                _id:
+                  type: string
+                  description: MongoDB format ID of a new board
+                  example: 65ca67e7ae7f10c88b598384
+                createdAt:
+                  description: Date and time when board was created
+                  type: string
+                  format: date-time
+                  example: '2024-12-02T03:50:19.232Z'
+                updatedAt:
+                  description: Date and time when board was updated last time
+                  type: string
+                  format: date-time
+                  example: '2024-12-11T00:50:02.166Z'
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
