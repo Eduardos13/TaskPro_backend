@@ -26,6 +26,15 @@ paths:
   /boards:
     post:
       $ref: '../docs/swagger/path/boards/post.yaml'
+    get:
+      $ref: '../docs/swagger/path/boards/get.yaml'
+  /boards/{id}:
+    get:
+      $ref: '../docs/swagger/path/boards/{id}/get.yaml'
+    patch:
+      $ref: '../docs/swagger/path/boards/{id}/patch.yaml'
+    delete:
+      $ref: '../docs/swagger/path/boards/{id}/delete.yaml'
   /cards:
     post:
       $ref: '../docs/swagger/path/cards/post.yaml'

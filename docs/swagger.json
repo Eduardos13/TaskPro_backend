@@ -230,6 +230,346 @@
             "$ref": "#/components/responses/500"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get all boards",
+        "operationId": "getAllBoards",
+        "description": "Get all boards",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "boards"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found all boards"
+                    },
+                    "boards": {
+                      "type": "array",
+                      "example": [
+                        {
+                          "_id": "674d2cf2d0824f62a4f3f9d3",
+                          "title": "Updated board title with path method2",
+                          "background": "default-bg-desk",
+                          "icon": "4dot",
+                          "owner": "67467d26dcac8fc709d7cd89",
+                          "columns": [
+                            "674d2dc8cd2bd097bcdf503e",
+                            "674d32a15eac583fdc97f1be"
+                          ],
+                          "createdAt": "2024-12-02T03:43:46.597Z",
+                          "updatedAt": "2024-12-11T00:48:56.806Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_card"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/boards/{id}": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Get board by id",
+        "operationId": "getBoard",
+        "description": "Get board by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MongoBD ID format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "board"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found a card with id 65ca67e7ae7f10c88b598384"
+                    },
+                    "board": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/board"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_board"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Update a board",
+        "operationId": "updateBoard",
+        "description": "Update a board",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Boards's id MongoDB format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "New title of a board",
+                    "example": "Work board"
+                  },
+                  "background": {
+                    "type": "string",
+                    "description": "A new background image for a new board",
+                    "enum": [
+                      "default-bg-mob",
+                      "bg1-2x-mob.jpg",
+                      "bg2-2x-mob.jpg",
+                      "bg3-2x-mob.jpg",
+                      "bg4-2x-mob.jpg",
+                      "bg5-2x-mob.jpg",
+                      "bg6-2x-mob.jpg",
+                      "bg7-2x-mob.jpg",
+                      "bg8-2x-mob.jpg",
+                      "bg9-2x-mob.jpg",
+                      "bg10-2x-mob.jpg",
+                      "bg11-2x-mob.jpg",
+                      "bg12-2x-mob.jpg",
+                      "bg13-2x-mob.jpg",
+                      "bg14-2x-mob.jpg",
+                      "bg15-2x-mob.jpg",
+                      "default-bg-tab",
+                      "bg1-2x-tab.jpg",
+                      "bg2-2x-tab.jpg",
+                      "bg3-2x-tab.jpg",
+                      "bg4-2x-tab.jpg",
+                      "bg5-2x-tab.jpg",
+                      "bg6-2x-tab.jpg",
+                      "bg7-2x-tab.jpg",
+                      "bg8-2x-tab.jpg",
+                      "bg9-2x-tab.jpg",
+                      "bg10-2x-tab.jpg",
+                      "bg11-2x-tab.jpg",
+                      "bg12-2x-tab.jpg",
+                      "bg13-2x-tab.jpg",
+                      "bg14-2x-tab.jpg",
+                      "bg15-2x-tab.jpg",
+                      "default-bg-desk",
+                      "bg1-2x-desk.jpg",
+                      "bg2-2x-desk.jpg",
+                      "bg3-2x-desk.jpg",
+                      "bg4-2x-desk.jpg",
+                      "bg5-2x-desk.jpg",
+                      "bg6-2x-desk.jpg",
+                      "bg7-2x-desk.jpg",
+                      "bg8-2x-desk.jpg",
+                      "bg9-2x-desk.jpg",
+                      "bg10-2x-desk.jpg",
+                      "bg11-2x-desk.jpg",
+                      "bg12-2x-desk.jpg",
+                      "bg13-2x-desk.jpg",
+                      "bg14-2x-desk.jpg",
+                      "bg15-2x-desk.jpg"
+                    ],
+                    "example": "bg1-2x-desk.jpg"
+                  },
+                  "icon": {
+                    "type": "string",
+                    "description": "New icon image for a new board",
+                    "enum": [
+                      "4dot",
+                      "star",
+                      "circle",
+                      "puzzle",
+                      "cube",
+                      "lightning",
+                      "3-circle",
+                      "octagon"
+                    ],
+                    "example": "circle"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated board with id 65ca67e7ae7f10c88b598384"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "_id": "674d2cf2d0824f62a4f3f9d3",
+                        "title": "New title",
+                        "background": "bg6-2x-desk.jpg",
+                        "icon": "circle",
+                        "owner": "67467d26dcac8fc709d7cd89",
+                        "columns": [
+                          "674d2dc8cd2bd097bcdf503e",
+                          "674d32a15eac583fdc97f1be"
+                        ],
+                        "createdAt": "2024-12-02T03:43:46.597Z",
+                        "updatedAt": "2025-01-07T02:33:33.046Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_board"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Delete board by ID",
+        "operationId": "deleteBoard",
+        "description": "Deleting boardrd by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "MongoDB ID format",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_board"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
       }
     },
     "/cards": {
@@ -1220,6 +1560,43 @@
                     "message": {
                       "type": "string",
                       "example": "Card not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_board": {
+        "description": "Board not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Board not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Board not found"
                     }
                   }
                 }

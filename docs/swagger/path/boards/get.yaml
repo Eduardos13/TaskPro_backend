@@ -1,0 +1,47 @@
+tags:
+  - Boards
+summary: Get all boards
+operationId: getAllBoards
+description: 'Get all boards'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'OK'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - boards
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found all boards
+            boards:
+              type: array
+              example:
+                [
+                  {
+                    '_id': '674d2cf2d0824f62a4f3f9d3',
+                    'title': 'Updated board title with path method2',
+                    'background': 'default-bg-desk',
+                    'icon': '4dot',
+                    'owner': '67467d26dcac8fc709d7cd89',
+                    'columns':
+                      ['674d2dc8cd2bd097bcdf503e', '674d32a15eac583fdc97f1be'],
+                    'createdAt': '2024-12-02T03:43:46.597Z',
+                    'updatedAt': '2024-12-11T00:48:56.806Z',
+                  },
+                ]
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    $ref: ../../components/responses/404_card.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml
