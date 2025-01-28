@@ -44,6 +44,217 @@
     }
   ],
   "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a user",
+        "operationId": "registerUser",
+        "description": "Register a new user with payload",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "User's name (2-32 characters, allows alphanumeric and special characters)",
+                    "type": "string",
+                    "example": "John_Doe",
+                    "minLength": 2,
+                    "maxLength": 32,
+                    "pattern": "^[a-zA-Z0-9!@#$%^&*()_+\\=\\[\\]{}|;:\\`\",.<>?/-]*$"
+                  },
+                  "email": {
+                    "description": "User's email (must contain '@')",
+                    "type": "string",
+                    "format": "email",
+                    "example": "johnD@mail.com",
+                    "pattern": "/^[a-zA-Z0-9!#$%^&`*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%^&`*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z0-9-]{2,}$/"
+                  },
+                  "password": {
+                    "description": "User's password (8-64 characters, allows alphanumeric and special characters)",
+                    "type": "string",
+                    "format": "password",
+                    "example": "Test1!",
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9!@#$%^&*()_+\\=\\[\\]{}|;:\\`\",.<>?/-]*$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User successfully registered"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_user"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login",
+        "operationId": "userLogin",
+        "description": "Login with email and password",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email (must contain '@')",
+                    "type": "string",
+                    "format": "email",
+                    "example": "user@example.com",
+                    "pattern": "/^[a-zA-Z0-9!#$%^&`*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%^&`*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z0-9-]{2,}$/"
+                  },
+                  "password": {
+                    "description": "User's password (8-64 characters, allows alphanumeric and special characters)",
+                    "type": "string",
+                    "format": "password",
+                    "example": "P@ssw0rd!123",
+                    "minLength": 8,
+                    "maxLength": 64,
+                    "pattern": "^[a-zA-Z0-9!@#$%^&*()_+\\=\\[\\]{}|;:\\`\",.<>?/-]*$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User successfully logged in"
+                    },
+                    "data": {
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "Bearer token_string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404_user"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout",
+        "operationId": "userLogout",
+        "description": "Log out the user, invalidating the authentication token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/boards": {
       "post": {
         "tags": [
@@ -1435,215 +1646,64 @@
         "scheme": "bearer"
       }
     },
-    "responses": {
-      "400": {
-        "description": "Conflict error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "ConflictError"
-                },
-                "error": {
-                  "type": "string",
-                  "example": "Invalid password or email"
-                }
-              }
-            }
-          }
-        }
-      },
-      "401": {
-        "description": "Unauthorized error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "UnauthorizedError"
-                },
-                "error": {
-                  "type": "string",
-                  "example": "Auth token is expired"
-                }
-              }
-            }
-          }
-        }
-      },
-      "500": {
-        "description": "Internal Server Error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 500
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Internal Server Error. Please try again later"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404_card": {
-        "description": "Card not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Card not found"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Card not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404_board": {
-        "description": "Board not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Board not found"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Board not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "404_column": {
-        "description": "Column not found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Column not found"
-                },
-                "data": {
-                  "type": "object",
-                  "required": [
-                    "message"
-                  ],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Column not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "66f6c3f8313287b622b71110"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John_Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "johnD@mail.com"
+          },
+          "theme": {
+            "description": "User's theme",
+            "enum": [
+              "light",
+              "dark",
+              "violet"
+            ],
+            "example": "dark",
+            "default": "dark"
+          },
+          "avatar": {
+            "description": "User's avatar",
+            "type": "string",
+            "format": "binary"
+          },
+          "createdAt": {
+            "description": "Date and time the user was originally created",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-10-06T12:45:15.699Z"
+          },
+          "updatedAt": {
+            "description": "Date and time the user was last modified",
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-10-06T12:45:15.699Z"
+          },
+          "versionKey": {
+            "description": "Indicates whether the document version key is included. Set to false to exclude the version key (__v) in the response.",
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
       "board": {
         "type": "object",
         "required": [
@@ -1864,6 +1924,280 @@
             "type": "string",
             "format": "date-time",
             "example": "2024-12-11T00:50:02.166Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Conflict error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Invalid password or email"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "Auth token is expired"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Conflict error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "ConflictError"
+                },
+                "error": {
+                  "type": "string",
+                  "example": "This email is already in use"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error. Please try again later"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_user": {
+        "description": "User not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_card": {
+        "description": "Card not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Card not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Card not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_board": {
+        "description": "Board not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Board not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Board not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404_column": {
+        "description": "Column not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Column not found"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Column not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
