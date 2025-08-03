@@ -20,10 +20,10 @@ const setupSessionCookies = (session, res) => {
 
 export const registerUserController = async (req, res) => {
   const { body } = req;
-  const user = await registerUser(body);
+  await registerUser(body);
 
   ///
-  const session = await loginUser({
+  const { session, user } = await loginUser({
     email: body.email,
     password: body.password,
   });
