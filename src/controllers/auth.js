@@ -20,26 +20,25 @@ const setupSessionCookies = (session, res) => {
 
 export const registerUserController = async (req, res) => {
   const { body } = req;
-  const { user, session } = await registerUser(body);
+  const user = await registerUser(body);
 
   res.status(200).json({
     status: 200,
     message: 'User successfully registered',
-    accessToken: session.accessToken,
     data: { user },
   });
 };
 
 export const loginUserController = async (req, res) => {
   const { body } = req;
-  const { user, session } = await loginUser(body);
+  constsession = await loginUser(body);
 
   setupSessionCookies(session, res);
 
   res.status(200).json({
     status: 200,
     message: 'User successfully logged in',
-    data: { accessToken: session.accessToken, user: { user } },
+    data: { accessToken: session.accessToken },
   });
 };
 
