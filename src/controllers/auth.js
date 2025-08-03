@@ -20,7 +20,7 @@ const setupSessionCookies = (session, res) => {
 
 export const registerUserController = async (req, res) => {
   const { body } = req;
-  const user = await registerUser(body);
+  const { user, session } = await registerUser(body);
 
   res.status(200).json({
     status: 200,
@@ -32,7 +32,7 @@ export const registerUserController = async (req, res) => {
 
 export const loginUserController = async (req, res) => {
   const { body } = req;
-  const session = await loginUser(body);
+  const { user, session } = await loginUser(body);
 
   setupSessionCookies(session, res);
 
