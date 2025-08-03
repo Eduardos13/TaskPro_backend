@@ -22,23 +22,32 @@ export const registerUserController = async (req, res) => {
   const { body } = req;
   const user = await registerUser(body);
 
+  ///
+  const session = await loginUser({
+    email: body.email,
+    password: body.password,
+  });
+  setupSessionCookies(session, res);
+
+  ///
+
   res.status(200).json({
     status: 200,
     message: 'User successfully registered',
-    data: { user },
+    data: { user, accessToken: session.accessToken },
   });
 };
 
 export const loginUserController = async (req, res) => {
   const { body } = req;
-  const session = await loginUser(body);
+  const { session, user } = await loginUser(body);
 
   setupSessionCookies(session, res);
 
   res.status(200).json({
     status: 200,
     message: 'User successfully logged in',
-    data: { accessToken: session.accessToken },
+    data: { accessToken: session.accessToken, user },
   });
 };
 
