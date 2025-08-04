@@ -115,8 +115,16 @@
                       "example": "User successfully registered"
                     },
                     "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/user"
+                        },
+                        "accessToken": {
+                          "type": "string",
+                          "example": "Bearer token_string"
+                        }
+                      }
                     }
                   }
                 }
@@ -209,6 +217,10 @@
                         "accessToken": {
                           "type": "string",
                           "example": "Bearer token_string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/user"
                         }
                       }
                     }

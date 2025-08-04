@@ -54,11 +54,13 @@ responses:
               type: string
               example: 'User successfully registered'
             data:
-              type: object
-              $ref: ../../components/schemas/user.yaml
-              accessToken:
-                type: string
-                example: 'Bearer token_string'
+              properties:
+                user:
+                  type: object
+                  $ref: ../../components/schemas/user.yaml
+                accessToken:
+                  type: string
+                  example: 'Bearer token_string'
   '400':
     $ref: '../../components/responses/400.yaml'
   '404':
